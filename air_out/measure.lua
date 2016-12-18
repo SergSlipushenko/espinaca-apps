@@ -3,8 +3,8 @@ return function()
     local pins = require 'pins'
     local URL = 'http://api.thingspeak.com/update?api_key=%s&field1=%d&field2=%d&field3=%d&field4=%d&field5=%d&field6=%d'
     local secrets = ldfile('secrets.lua')
-    gpio.mode(pins.IO0,gpio.OUTPUT)
-    gpio.write(pins.IO0,gpio.LOW)
+    gpio.mode(pins.IO2,gpio.OUTPUT)
+    gpio.write(pins.IO2,gpio.LOW)
     ftr.sleep(30)
     local res = bme280.init(pins.IO5,pins.IO4)
     if not res then print('BМE280 failed to init'); return end
@@ -35,6 +35,6 @@ return function()
         nt.mqtt:publish('sensors/outdoor/vdd', vdd, 0, 1)
         print('published!')
     end
-    gpio.write(pins.IO0,gpio.HIGH)
+    gpio.write(pins.IO2,gpio.HIGH)
     nt.deploy({wifi=false})    
 end
