@@ -8,5 +8,6 @@ return {
     },
     crontab = {
         {every = 1, job = 'measure'},
+        {every = 1, job = 'send'},
     }
 }
