@@ -1,10 +1,15 @@
 return function()
-    if not(temp and humi and press and lux and vdd and heap) then return end
+    local _temp = temp or 0
+    local _humi = humi or 0
+    local _press = press or 0
+    local _lux = lux or 0
+    local _vdd = vdd or 0
+    local _heap = heap or 0
     nt.deploy({wifi=true ,mqtt=true})
     if nt.wifi.running then
         local URL = 'http://api.thingspeak.com/update?api_key=%s&field1=%d&field2=%d&field3=%d&field4=%d&field5=%d&field6=%d'
         local secrets = ldfile('secrets.lua')
-        url=URL:format(secrets.TS.api_key,temp,humi,press,lux,vdd,heap)
+        url=URL:format(secrets.TS.api_key,_temp,_humi,_press,_lux,_vdd,_heap)
         print(url)
         ft_send = ftr.Future()
         http.get(url, nil, ft_send:callbk())
@@ -16,5 +21,5 @@ return function()
         nt.mqtt:publish('sensors/outdoor/vdd', vdd, 0, 1)
         print('published!')
     end
-    nt.deploy({wifi=false})    
+    nt.deploy({wifi=false})  
 end
