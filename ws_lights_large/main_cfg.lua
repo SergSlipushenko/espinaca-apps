@@ -10,8 +10,8 @@ return {
         cycle_cell = 21,
         watchdog_interval = 5000,
     },
-    crontab = {
+    --[[crontab = {
         {every = 1, job = 'color_upd'},
         {every = 20, job = 'random'},
-    }    
+    }]]    
 }
