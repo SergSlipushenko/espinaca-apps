@@ -1,6 +1,5 @@
 return function()
     local pins = require 'pins'
-    heap = node.heap()
     vdd = adc.readvdd33()    
     gpio.mode(pins.IO2,gpio.OUTPUT)
     gpio.write(pins.IO2,gpio.LOW)
@@ -22,5 +21,10 @@ return function()
         lux = bh1750.lux() 
     end
     gpio.write(pins.IO2,gpio.HIGH)
-    print(temp,humi,press,lux,vdd,heap)
+    print(temp,humi,press,lux,vdd)
+    rtcfifo.put(1, 32768+temp, 0, 'temp')
+    rtcfifo.put(1, humi, 0, 'humi')
+    rtcfifo.put(1, 32768+press, 0, 'pres')
+    rtcfifo.put(1, lux, 0, 'lux')
+    rtcfifo.put(1, vdd, 0, 'vdd')
 end

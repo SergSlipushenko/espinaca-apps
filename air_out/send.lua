@@ -1,10 +1,22 @@
 return function()
-    local _temp = temp or 0
-    local _humi = humi or 0
-    local _press = press or 0
-    local _lux = lux or 0
-    local _vdd = vdd or 0
-    local _heap = heap or 0
+    local data = {}
+    while true do
+        local ts, val, _, key = rtcfifo.pop()
+        if ts == nil then break end
+        if data[key] == nil then
+            data[key] = {sum=0, num=0}
+        end
+        data[key]['sum'] = data[key]['sum'] + val
+        data[key]['num'] = data[key]['num'] + 1
+    end
+    print(dump(data))
+    local _temp = data['temp']['sum']/data['temp']['num'] - 32768
+    local _humi = data['humi']['sum']/data['humi']['num']
+    local _press = data['pres']['sum']/data['pres']['num'] - 32768
+    local _lux = data['lux']['sum']/data['lux']['num']
+    local _vdd = data['vdd']['sum']/data['vdd']['num']
+    local _heap = node.heap()
+    print(_temp,_humi,_press,_lux,_vdd,_heap)
     nt.deploy({wifi=true})
     if nt.wifi.running then
         local URL = 'http://api.thingspeak.com/update?api_key=%s&field1=%d&field2=%d&field3=%d&field4=%d&field5=%d&field6=%d'

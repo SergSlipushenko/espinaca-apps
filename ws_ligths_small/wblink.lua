@@ -4,11 +4,12 @@ return function()
     table.insert(timers, tt)
     tt:alarm(30, tmr.ALARM_AUTO, function()
         buf:fill(0, 0, 0)
-        if math.random(1,5) == 5 then  
+        if math.random(1,6) >= 4 then  
             for i = 1,3 do
-               buf:set(math.random(1,17), 255, 255, 255)
+               buf:set(math.random(1,101), 255, 255, 255)
             end
         end
+        buf:set(1, 0, 0, 0)         
         ws2812.write(buf)
     end)
 end
