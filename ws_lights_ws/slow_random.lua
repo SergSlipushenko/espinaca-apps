@@ -1,4 +1,5 @@
 return function()
+    clr_timers()
     local tt = tmr.create()
     table.insert(timers, tt)
     local ii = 0

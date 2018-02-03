@@ -1,3 +1,4 @@
 return {
-    on_boot_script = 'boot'
+    on_boot_script = 'boot',
+    service = 'xmas'
 }

@@ -1,4 +1,5 @@
 return function()
+    clr_timers()
     local tt = tmr.create()
     table.insert(timers, tt)
     local ii = 0
@@ -9,7 +10,7 @@ return function()
     local p = 80
     tt:alarm(25, tmr.ALARM_AUTO, function()
         if pulse[ii%p+1] then
-            g,r,b = leds.hsv2grb(clrs[(ii/p)%7+1], 255, pulse[ii%p+1])    
+            g,r,b = leds.hsv2grb(clrs[(ii/p)%7+1], sat, pulse[ii%p+1]*val/255)
         else
             g,r,b = leds.hsv2grb(0,0,0)
         end

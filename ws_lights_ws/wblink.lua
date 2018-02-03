@@ -1,15 +1,17 @@
 return function()
+    clr_timers()
     local tt = tmr.create()
-    local clrs = {0, 12, 25, 100, 150, 230, 280}
     table.insert(timers, tt)
+    local r, g ,b = 0, 0, 0
     tt:alarm(30, tmr.ALARM_AUTO, function()
         buf:fill(0, 0, 0)
-        if math.random(1,6) >= 4 then  
+        if math.random(1,6) >= 4 then
             for i = 1,3 do
-               buf:set(math.random(1,101), 255, 255, 255)
+                g, r, b = leds.hsv2grb(0, 0, val)
+                buf:set(math.random(1,101), r, g, b)
             end
         end
-        buf:set(1, 0, 0, 0)         
+        buf:set(1, 0, 0, 0)
         ws2812.write(buf)
     end)
 end
